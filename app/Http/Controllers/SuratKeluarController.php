@@ -21,4 +21,25 @@ class SuratKeluarController extends Controller
 
         return view('surat-keluar.index', compact('suratKeluar'));
     }
+    
+        public function show($id)
+        {
+            $SuratKeluarShow = [
+                1 => [
+                    'nomor_surat' => '001/SK/X/2026',
+                    'tanggal' => '2026-10-20',
+                    'tujuan' => 'Dinas Pendidikan',
+                    'perihal' => 'Permohonan Kerja Sama',
+                ],
+            ];
+
+            if (!isset($SuratKeluarShow[$id])) {
+                abort(404);
+            }
+
+            return view('surat-keluar.show', [
+                'SuratKeluarShow' => $SuratKeluarShow[$id],
+            ]);
+        }
+
 }

@@ -15,6 +15,7 @@
                 <th>Tujuan</th>
                 <th>Perihal</th>
                 <th>Status</th>
+                <th>aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                     <td>{{ $surat['tujuan'] }}</td>
                     <td>{{ $surat['perihal'] }}</td>
                     <td>{{ $surat['status'] }}</td>
+                    <td>
+                        <a href="{{ route('surat-keluar.show', $surat['id']) }}">Detail</a>
+                    </td>
                 </tr>
             @empty
                 <tr>

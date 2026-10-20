@@ -14,3 +14,4 @@
 @else
     <p>Data tidak ditemukan</p>
 @endif
+@endsection
