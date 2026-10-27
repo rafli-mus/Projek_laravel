@@ -1,37 +1,42 @@
+
 @extends('layout.app')
 
-@section('title', 'Surat Masuk')
+@section('title', 'Daftar Surat Masuk')
 
 @section('content')
+    <h1>Daftar Surat Masuk</h1>
 
-    <h1>Halaman ini menampilkan data surat masuk.</h1>
-
-    <table border="1" cellpadding="10">
-        <thread>
+    <table border="1" cellpadding="8">
+        <thead>
             <tr>
-                <th>no</th>
-                <th>nomor surat</th>
-                <th>tanggal</th>
-                <th>pengirim</th>
-                <th>perihal</th>
-                <th>aksi</th>
+                <th>No</th>
+                <th>Nomor Surat</th>
+                <th>Tanggal</th>
+                <th>Pengirim</th>
+                <th>Perihal</th>
+                <th>Aksi</th>
             </tr>
-        </thread>
+        </thead>
 
         <tbody>
-            @foreach($SuratMasuk as $surat)
-            <tr>
-                <td>{{ $loop -> iteration}}</td>
-                <td>{{ $surat['nomor_surat'] }}</td>
-                <td>{{ $surat['tanggal'] }}</td>
-                <td>{{ $surat['pengirim'] }}</td>
-                <td>{{ $surat['perihal'] }}</td>
-                <td>
-                    <a href="{{route('surat-masuk.show', $surat['id'])}}">Detail</a>
-                </td>
-            </tr>
-            @endforeach
-      </tbody>
+            @forelse ($suratMasuk as $surat)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $surat->nomor_surat }}</td>
+                    <td>{{ $surat->tanggal }}</td>
+                    <td>{{ $surat->pengirim }}</td>
+                    <td>{{ $surat->perihal }}</td>
+                    <td>
+                        <a href="{{ route('surat-masuk.show', $surat->id) }}">
+                            Detail
+                        </a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">Belum ada surat masuk.</td>
+                </tr>
+            @endforelse
+        </tbody>
     </table>
 @endsection
-

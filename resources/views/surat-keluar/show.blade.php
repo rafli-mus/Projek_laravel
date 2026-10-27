@@ -1,18 +1,15 @@
 @extends('layout.app')
 
-@section('title', 'surat keluar')
+@section('title', 'Detail Surat Keluar')
 
 @section('content')
     <h1>Halaman Detail Surat Keluar</h1>
 
-    @if($SuratKeluarShow)
-        <p>
-            <strong>Nomor Surat : </strong>{{ $SuratKeluarShow['nomor_surat'] }}<br>
-            <strong>Tanggal : </strong>{{ $SuratKeluarShow['tanggal'] }}<br>
-            <strong>Tujuan : </strong>{{ $SuratKeluarShow['tujuan'] }}<br>
-            <strong>Perihal : </strong>{{ $SuratKeluarShow['perihal'] }}<br>
-        </p>
-    @else
-        <p>Data tidak ditemukan</p>
-    @endif
+    <p><strong>Nomor Surat:</strong> {{ $surat->nomor_surat }}</p>
+    <p><strong>Tanggal:</strong> {{ $surat->tanggal->format('d-m-Y') }}</p>
+    <p><strong>Tujuan:</strong> {{ $surat->tujuan }}</p>
+    <p><strong>Perihal:</strong> {{ $surat->perihal }}</p>
+    <p><strong>Keterangan:</strong> {{ $surat->keterangan }}</p>
+
+    <a href="{{ route('surat-keluar.index') }}">Kembali ke daftar</a>
 @endsection

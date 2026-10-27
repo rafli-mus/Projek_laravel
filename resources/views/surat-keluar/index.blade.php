@@ -14,26 +14,26 @@
                 <th>Tanggal</th>
                 <th>Tujuan</th>
                 <th>Perihal</th>
-                <th>Status</th>
+                <th>Keterangan</th>
                 <th>aksi</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($suratKeluar as $surat)
                 <tr>
-                    <td>{{ $surat['id'] }}</td>
-                    <td>{{ $surat['nomor'] }}</td>
-                    <td>{{ $surat['tanggal'] }}</td>
-                    <td>{{ $surat['tujuan'] }}</td>
-                    <td>{{ $surat['perihal'] }}</td>
-                    <td>{{ $surat['status'] }}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $surat->nomor_surat }}</td>
+                    <td>{{ $surat->tanggal->format('d-m-Y') }}</td>
+                    <td>{{ $surat->tujuan }}</td>
+                    <td>{{ $surat->perihal }}</td>
+                    <td>{{ $surat->keterangan }}</td>
                     <td>
-                        <a href="{{ route('surat-keluar.show', $surat['id']) }}">Detail</a>
+                        <a href="{{ route('surat-keluar.show', $surat->id) }}">Detail</a>
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6">Belum ada surat keluar.</td>
+                    <td colspan="7">Belum ada surat keluar.</td>
                 </tr>
             @endforelse
         </tbody>
