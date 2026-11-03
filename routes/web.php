@@ -14,17 +14,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/', fn () => view('dashboard'))->name('dashboard');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::get('/surat-masuk', [SuratMasukController::class, 'index'])->name('surat-masuk.index');
     Route::resource('surat-masuk', SuratMasukController::class)
-        ->except(['index', 'show'])
         ->parameters(['surat-masuk' => 'id'])
-        ->middleware('can:manage-letters');
-    Route::get('/surat-masuk/{id}', [SuratMasukController::class, 'show'])->name('surat-masuk.show');
+        ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'can:manage-letters');
 
-    Route::get('/surat-keluar', [SuratKeluarController::class, 'index'])->name('surat-keluar.index');
     Route::resource('surat-keluar', SuratKeluarController::class)
-        ->except(['index', 'show'])
         ->parameters(['surat-keluar' => 'id'])
-        ->middleware('can:manage-letters');
-    Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'show'])->name('surat-keluar.show');
+        ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'can:manage-letters');
 });
