@@ -3,12 +3,20 @@
 namespace Tests\Feature;
 
 use App\Models\OutgoingLetter;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SuratKeluarTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->actingAs(User::factory()->create(['role' => 'pembaca']));
+    }
 
     public function test_index_displays_outgoing_letters(): void
     {

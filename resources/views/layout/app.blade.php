@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,10 +14,20 @@
             <a href="{{route('dashboard')}}">dashboard</a>
             <a href="{{route('surat-masuk.index')}}">surat masuk</a>
             <a href="{{route('surat-keluar.index')}}">surat keluar</a>
+            @auth
+                <span>Masuk sebagai: {{ auth()->user()->name }} ({{ auth()->user()->role }})</span>
+                <form method="POST" action="{{ route('logout') }}" style="display:inline">
+                    @csrf
+                    <button type="submit">Keluar</button>
+                </form>
+            @endauth
         </nav>
     </header>
 
     <main>
+        @if (session('success'))
+            <p role="status">{{ session('success') }}</p>
+        @endif
         @yield('content')
     </main>
 

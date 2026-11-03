@@ -6,6 +6,10 @@
 @section('content')
     <h1>Daftar Surat Masuk</h1>
 
+    @can('manage-letters')
+        <p><a href="{{ route('surat-masuk.create') }}">+ Tambah Surat</a></p>
+    @endcan
+
     <table border="1" cellpadding="8">
         <thead>
             <tr>
@@ -30,6 +34,14 @@
                         <a href="{{ route('surat-masuk.show', $surat->id) }}">
                             Detail
                         </a>
+                        @can('manage-letters')
+                            <a href="{{ route('surat-masuk.edit', $surat->id) }}">Edit</a>
+                            <form method="POST" action="{{ route('surat-masuk.destroy', $surat->id) }}" style="display:inline" onsubmit="return confirm('Hapus surat ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Hapus</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @empty
