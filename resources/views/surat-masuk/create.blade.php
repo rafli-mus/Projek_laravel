@@ -3,6 +3,15 @@
 @section('title', 'Tambah Surat Masuk')
 
 @section('content')
-    <h1>Tambah Surat Masuk</h1>
-    @include('surat-masuk._form', ['action' => route('surat-masuk.store'), 'method' => 'POST', 'surat' => null])
+    <div class="mx-auto max-w-3xl">
+        <a href="{{ route('surat-masuk.index') }}" class="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-blue-700"><span aria-hidden="true">←</span> Kembali ke daftar</a>
+        <div class="mb-6">
+            <p class="text-sm font-semibold text-blue-700">Surat Masuk</p>
+            <h1 class="mt-1 text-3xl font-bold tracking-tight text-slate-900">Tambah Surat</h1>
+            <p class="mt-2 text-sm text-slate-500">Lengkapi informasi surat yang diterima.</p>
+        </div>
+        <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
+            @include('surat-masuk._form', ['action' => route('surat-masuk.store'), 'method' => 'POST', 'surat' => null])
+        </section>
+    </div>
 @endsection
