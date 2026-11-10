@@ -17,31 +17,31 @@
 
     <div>
         <label for="nomor_surat" class="mb-2 block text-sm font-semibold text-slate-700">Nomor Surat <span class="text-rose-500">*</span></label>
-        <input id="nomor_surat" name="nomor_surat" value="{{ old('nomor_surat', $surat?->nomor_surat) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10">
+        <input id="nomor_surat" name="nomor_surat" value="{{ old('nomor_surat', $surat?->nomor_surat) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10">
         @error('nomor_surat') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror
     </div>
     <div>
         <label for="tanggal" class="mb-2 block text-sm font-semibold text-slate-700">Tanggal <span class="text-rose-500">*</span></label>
-        <input id="tanggal" type="date" name="tanggal" value="{{ old('tanggal', $surat?->tanggal?->format('Y-m-d')) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10">
+        <input id="tanggal" type="date" name="tanggal" value="{{ old('tanggal', $surat?->tanggal?->format('Y-m-d')) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10">
         @error('tanggal') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror
     </div>
     <div>
         <label for="tujuan" class="mb-2 block text-sm font-semibold text-slate-700">Tujuan <span class="text-rose-500">*</span></label>
-        <input id="tujuan" name="tujuan" value="{{ old('tujuan', $surat?->tujuan) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10">
+        <input id="tujuan" name="tujuan" value="{{ old('tujuan', $surat?->tujuan) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10">
         @error('tujuan') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror
     </div>
     <div>
         <label for="perihal" class="mb-2 block text-sm font-semibold text-slate-700">Perihal <span class="text-rose-500">*</span></label>
-        <input id="perihal" name="perihal" value="{{ old('perihal', $surat?->perihal) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10">
+        <input id="perihal" name="perihal" value="{{ old('perihal', $surat?->perihal) }}" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10">
         @error('perihal') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror
     </div>
     <div>
         <label for="keterangan" class="mb-2 block text-sm font-semibold text-slate-700">Keterangan <span class="font-normal text-slate-400">(opsional)</span></label>
-        <textarea id="keterangan" name="keterangan" rows="4" class="w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10">{{ old('keterangan', $surat?->keterangan) }}</textarea>
+        <textarea id="keterangan" name="keterangan" rows="4" class="w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-500/10">{{ old('keterangan', $surat?->keterangan) }}</textarea>
         @error('keterangan') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror
     </div>
     <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
         <a href="{{ route('surat-keluar.index') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-200 px-5 py-3 text-sm font-bold text-slate-600 transition hover:bg-slate-50">Batal</a>
-        <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700">Simpan Surat</button>
+        <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-fuchsia-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-fuchsia-600/20 transition hover:bg-fuchsia-700">Simpan Surat</button>
     </div>
 </form>

@@ -12,7 +12,7 @@
     <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
         <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
             <a href="{{ route('dashboard') }}" class="flex items-center gap-3 no-underline">
-                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20">
+                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-600 text-white shadow-lg shadow-violet-600/20">
                     <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3.75h7l4.25 4.5v11A1.75 1.75 0 0 1 16.5 21h-9A1.75 1.75 0 0 1 5.75 19.25v-13.75A1.75 1.75 0 0 1 7.5 3.75Z" stroke="currentColor" stroke-width="1.6"/><path d="M14 4v4.5h4M8.5 12h7M8.5 15.5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 <span>
@@ -22,9 +22,9 @@
             </a>
 
             <nav class="flex flex-wrap items-center gap-1.5 sm:gap-2" aria-label="Navigasi utama">
-                <a href="{{ route('dashboard') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Dashboard</a>
-                <a href="{{ route('surat-masuk.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('surat-masuk.*') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Surat Masuk</a>
-                <a href="{{ route('surat-keluar.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('surat-keluar.*') ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Surat Keluar</a>
+                <a href="{{ route('dashboard') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Dashboard</a>
+                <a href="{{ route('surat-masuk.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('surat-masuk.*') ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Surat Masuk</a>
+                <a href="{{ route('surat-keluar.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('surat-keluar.*') ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Surat Keluar</a>
             @auth
                 <span class="ml-1 hidden items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 sm:inline-flex">
                     <span class="h-2 w-2 rounded-full bg-emerald-500"></span>

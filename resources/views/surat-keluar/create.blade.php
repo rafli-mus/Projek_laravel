@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="mx-auto max-w-3xl">
-        <a href="{{ route('surat-keluar.index') }}" class="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-indigo-700"><span aria-hidden="true">←</span> Kembali ke daftar</a>
+        <a href="{{ route('surat-keluar.index') }}" class="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-fuchsia-700"><span aria-hidden="true">←</span> Kembali ke daftar</a>
         <div class="mb-6">
-            <p class="text-sm font-semibold text-indigo-700">Surat Keluar</p>
+            <p class="text-sm font-semibold text-fuchsia-700">Surat Keluar</p>
             <h1 class="mt-1 text-3xl font-bold tracking-tight text-slate-900">Tambah Surat</h1>
             <p class="mt-2 text-sm text-slate-500">Lengkapi informasi surat yang akan dikirim.</p>
         </div>

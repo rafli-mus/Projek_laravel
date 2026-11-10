@@ -6,12 +6,12 @@
 @section('content')
     <div class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <p class="text-sm font-semibold text-indigo-700">Arsip persuratan</p>
+            <p class="text-sm font-semibold text-fuchsia-700">Arsip persuratan</p>
             <h1 class="mt-1 text-3xl font-bold tracking-tight text-slate-900">Surat Keluar</h1>
             <p class="mt-2 text-sm text-slate-500">Daftar surat yang diterbitkan dan dikirim dari sistem.</p>
         </div>
         @can('manage-letters')
-            <a href="{{ route('surat-keluar.create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-700">
+            <a href="{{ route('surat-keluar.create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-fuchsia-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-fuchsia-600/20 transition hover:bg-fuchsia-700">
                 <span class="text-lg leading-none">+</span> Tambah Surat
             </a>
         @endcan
@@ -23,7 +23,7 @@
                 <h2 class="font-bold text-slate-900">Daftar surat</h2>
                 <p class="mt-1 text-xs text-slate-500">{{ $suratKeluar->count() }} surat tercatat</p>
             </div>
-            <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">Surat Keluar</span>
+            <span class="rounded-full bg-fuchsia-50 px-3 py-1 text-xs font-semibold text-fuchsia-700">Surat Keluar</span>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full min-w-[820px] text-left text-sm">
@@ -49,7 +49,7 @@
                     <td class="px-5 py-4 text-slate-600">{{ $surat->keterangan ?: '—' }}</td>
                     <td class="whitespace-nowrap px-5 py-4">
                         <div class="flex items-center gap-2">
-                        <a class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-50" href="{{ route('surat-keluar.show', $surat->id) }}">Detail</a>
+                        <a class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-fuchsia-700 transition hover:bg-fuchsia-50" href="{{ route('surat-keluar.show', $surat->id) }}">Detail</a>
                         @can('manage-letters')
                             <a class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100" href="{{ route('surat-keluar.edit', $surat->id) }}">Edit</a>
                             <form method="POST" action="{{ route('surat-keluar.destroy', $surat->id) }}" onsubmit="return confirm('Hapus surat ini?')">
