@@ -1,75 +1,85 @@
-
 @extends('layout.app')
 
-@section('title', 'Daftar Surat Masuk')
+@section('title', 'Surat Masuk')
+@section('jenis', 'masuk')
 
 @section('content')
-    <div class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-            <p class="text-sm font-semibold text-violet-700">Arsip persuratan</p>
-            <h1 class="mt-1 text-3xl font-bold tracking-tight text-slate-900">Surat Masuk</h1>
-            <p class="mt-2 text-sm text-slate-500">Daftar surat yang diterima dan tercatat dalam sistem.</p>
+            <p class="eyebrow">Buku agenda</p>
+            <h1 class="page-title mt-2">Surat Masuk</h1>
+            <p class="mt-2 text-sm text-ink-soft">Surat yang diterima dan tercatat dalam arsip.</p>
         </div>
         @can('manage-letters')
-            <a href="{{ route('surat-masuk.create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-violet-600/20 transition hover:bg-violet-700">
+            <a href="{{ route('surat-masuk.create') }}" class="btn btn-primary">
                 <span class="text-lg leading-none">+</span> Tambah Surat
             </a>
         @endcan
     </div>
 
-    <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4 sm:px-6">
-            <div>
-                <h2 class="font-bold text-slate-900">Daftar surat</h2>
-                <p class="mt-1 text-xs text-slate-500">{{ $suratMasuk->count() }} surat tercatat</p>
-            </div>
-            <span class="rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-700">Surat Masuk</span>
+    @include('surat._filter', ['route' => 'surat-masuk.index', 'placeholder' => 'Cari nomor, pengirim, atau perihal'])
+
+    <section class="card overflow-hidden">
+        <div class="flex items-center justify-between border-b border-line px-6 py-4">
+            <p class="text-sm text-ink-soft"><span class="font-semibold text-ink">{{ $suratMasuk->total() }}</span> surat ditemukan</p>
+            <span class="stamp">Masuk</span>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full min-w-[760px] text-left text-sm">
-                <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+            <table class="w-full min-w-[820px] text-left text-sm">
+                <thead class="border-b border-line text-[11px] tracking-[0.14em] text-ink-faint uppercase">
                     <tr>
-                        <th class="px-5 py-3.5 font-bold sm:px-6">No</th>
-                        <th class="px-5 py-3.5 font-bold">Nomor Surat</th>
-                        <th class="px-5 py-3.5 font-bold">Tanggal</th>
-                        <th class="px-5 py-3.5 font-bold">Pengirim</th>
-                        <th class="px-5 py-3.5 font-bold">Perihal</th>
-                        <th class="px-5 py-3.5 font-bold">Aksi</th>
+                        <th class="px-6 py-3 font-bold">No</th>
+                        <th class="px-4 py-3 font-bold">Nomor Surat</th>
+                        <th class="px-4 py-3 font-bold">Tanggal</th>
+                        <th class="px-4 py-3 font-bold">Pengirim</th>
+                        <th class="px-4 py-3 font-bold">Perihal</th>
+                        <th class="px-4 py-3 font-bold">Kategori</th>
+                        <th class="px-4 py-3 font-bold"><span class="sr-only">Aksi</span></th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody class="divide-y divide-line">
                     @forelse ($suratMasuk as $surat)
-                <tr class="transition hover:bg-slate-50/80">
-                    <td class="whitespace-nowrap px-5 py-4 font-medium text-slate-500 sm:px-6">{{ $loop->iteration }}</td>
-                    <td class="whitespace-nowrap px-5 py-4 font-semibold text-slate-900">{{ $surat->nomor_surat }}</td>
-                    <td class="whitespace-nowrap px-5 py-4 text-slate-600">{{ $surat->tanggal->format('d-m-Y') }}</td>
-                    <td class="px-5 py-4 text-slate-600">{{ $surat->pengirim }}</td>
-                    <td class="px-5 py-4 text-slate-600">{{ $surat->perihal }}</td>
-                    <td class="whitespace-nowrap px-5 py-4">
-                        <div class="flex items-center gap-2">
-                        <a class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-violet-700 transition hover:bg-violet-50" href="{{ route('surat-masuk.show', $surat->id) }}">Detail</a>
-                        @can('manage-letters')
-                            <a class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100" href="{{ route('surat-masuk.edit', $surat->id) }}">Edit</a>
-                            <form method="POST" action="{{ route('surat-masuk.destroy', $surat->id) }}" onsubmit="return confirm('Hapus surat ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="rounded-lg px-2.5 py-1.5 text-xs font-bold text-rose-600 transition hover:bg-rose-50" type="submit">Hapus</button>
-                            </form>
-                        @endcan
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="px-6 py-14 text-center">
-                        <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-500">✉</span>
-                        <p class="mt-4 font-semibold text-slate-800">Belum ada surat masuk</p>
-                        <p class="mt-1 text-sm text-slate-500">Surat yang ditambahkan akan muncul di daftar ini.</p>
-                    </td>
-                </tr>
-            @endforelse
+                        <tr class="transition hover:bg-paper/60">
+                            <td class="px-6 py-4 font-mono text-xs text-ink-faint">{{ str_pad($suratMasuk->firstItem() + $loop->index, 2, '0', STR_PAD_LEFT) }}</td>
+                            <td class="px-4 py-4 font-mono text-xs font-medium whitespace-nowrap text-ink">{{ $surat->nomor_surat }}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-ink-soft">{{ $surat->tanggal->format('d-m-Y') }}</td>
+                            <td class="px-4 py-4 text-ink-soft">{{ $surat->pengirim }}</td>
+                            <td class="px-4 py-4">
+                                <span class="font-semibold text-ink">{{ $surat->perihal }}</span>
+                                @if ($surat->lampiran)
+                                    <span class="ml-1 inline-flex align-middle text-ink-faint" title="Ada lampiran">
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"/></svg>
+                                        <span class="sr-only">Ada lampiran</span>
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                @if ($surat->category)
+                                    <span class="stamp">{{ $surat->category->nama }}</span>
+                                @else
+                                    <span class="text-xs text-ink-faint">Tanpa kategori</span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-4 whitespace-nowrap">
+                                <div class="flex items-center justify-end gap-1">
+                                    <a class="link-action text-accent hover:bg-accent/10" href="{{ route('surat-masuk.show', $surat->id) }}">Detail</a>
+                                    @can('manage-letters')
+                                        <a class="link-action text-ink-soft hover:bg-paper-deep" href="{{ route('surat-masuk.edit', $surat->id) }}">Edit</a>
+                                        <form method="POST" action="{{ route('surat-masuk.destroy', $surat->id) }}" onsubmit="return confirm('Hapus surat ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="link-action text-rose-700 hover:bg-rose-50" type="submit">Hapus</button>
+                                        </form>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        @include('surat._kosong', ['colspan' => 7, 'jenis' => 'surat masuk'])
+                    @endforelse
                 </tbody>
             </table>
         </div>
+        @include('surat._pagination', ['paginator' => $suratMasuk])
     </section>
 @endsection

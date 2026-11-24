@@ -1,12 +1,75 @@
-@import 'tailwindcss';
+@import 'tailwindcss'; /* untuk memanggil tailwindcss */
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+/* @source blade sendiri untuk memberi tahu tailwind lokasi blade yang harus diperiksa */
 @source "../**/*.blade.php";
 @source "../**/*.js";
 @source "../**/*.vue";
 
+/* ---------- Tema "Buku Agenda Arsip" ---------- */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Fraunces', ui-serif, Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    --color-paper: #f5f1e8;       /* latar kertas */
+    --color-paper-deep: #ebe4d4;
+    --color-surface: #fffdf9;     /* kartu */
+    --color-line: #e3dccd;        /* garis */
+    --color-ink: #17211f;         /* teks utama */
+    --color-ink-soft: #55625f;
+    --color-ink-faint: #8a948f;
+    --color-brand: #1f4d45;       /* hijau tinta */
+    --color-brand-deep: #132f2a;
+    --color-gold: #e9c46a;        /* aksen cap */
+    --color-masuk: #1f6f5c;
+    --color-keluar: #b4532a;
+}
+
+/* Warna aksen berganti otomatis sesuai halaman (data-jenis pada <body>) */
+@theme inline {
+    --color-accent: var(--accent);
+}
+
+:root { --accent: #1f4d45; }
+[data-jenis='masuk'] { --accent: #1f6f5c; }
+[data-jenis='keluar'] { --accent: #b4532a; }
+
+/* ---------- Komponen yang dipakai berulang ---------- */
+@layer components {
+    .eyebrow {
+        @apply text-[11px] font-bold tracking-[0.2em] text-accent uppercase;
+    }
+    .page-title {
+        @apply font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl;
+    }
+    .card {
+        @apply rounded-2xl border border-line bg-surface shadow-[0_1px_2px_rgba(23,33,31,0.04)];
+    }
+    .label {
+        @apply mb-2 block text-sm font-semibold text-ink;
+    }
+    .field {
+        @apply w-full rounded-xl border border-line bg-white px-4 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink-faint focus:border-accent focus:ring-4 focus:ring-accent/15;
+    }
+    .field-error {
+        @apply mt-2 text-sm font-medium text-rose-700;
+    }
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/25;
+    }
+    .btn-primary {
+        @apply bg-accent text-white shadow-sm hover:bg-accent/90;
+    }
+    .btn-outline {
+        @apply border border-line bg-surface text-ink-soft hover:border-ink-faint hover:text-ink;
+    }
+    .link-action {
+        @apply rounded-lg px-2.5 py-1.5 text-xs font-bold transition;
+    }
+    /* Kategori tampil seperti cap stempel */
+    .stamp {
+        @apply inline-flex items-center gap-1 rounded-md border-[1.5px] border-current px-2 py-0.5 text-[10px] font-bold tracking-[0.14em] text-accent uppercase;
+    }
 }

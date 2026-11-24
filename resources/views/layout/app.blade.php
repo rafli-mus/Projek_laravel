@@ -3,57 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
+    <title>@yield('title') · SIM-Surat</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=fraunces:500,600,700|plus-jakarta-sans:400,500,600,700|jetbrains-mono:500" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex min-h-screen flex-col bg-slate-50 font-sans text-slate-800 antialiased">
-    <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
-        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-3 no-underline">
-                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-600 text-white shadow-lg shadow-violet-600/20">
-                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3.75h7l4.25 4.5v11A1.75 1.75 0 0 1 16.5 21h-9A1.75 1.75 0 0 1 5.75 19.25v-13.75A1.75 1.75 0 0 1 7.5 3.75Z" stroke="currentColor" stroke-width="1.6"/><path d="M14 4v4.5h4M8.5 12h7M8.5 15.5h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                <span>
-                    <span class="block text-base font-bold tracking-tight text-slate-900">SIM-Surat</span>
-                    <span class="block text-xs font-medium text-slate-500">Sistem Informasi Persuratan</span>
-                </span>
-            </a>
+@php
+    $menu = [
+        ['route' => 'dashboard', 'aktif' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'M3.75 12 12 4.5l8.25 7.5M5.25 10.5v8.25c0 .41.34.75.75.75h3.75v-5.25h4.5v5.25H18c.41 0 .75-.34.75-.75V10.5'],
+        ['route' => 'surat-masuk.index', 'aktif' => 'surat-masuk.*', 'label' => 'Surat Masuk', 'icon' => 'M3.75 13.5h4.5l1.5 2.25h4.5l1.5-2.25h4.5M3.75 13.5 6 5.25h12l2.25 8.25v5.25H3.75V13.5ZM12 3.75v6.75m0 0-2.25-2.25M12 10.5l2.25-2.25'],
+        ['route' => 'surat-keluar.index', 'aktif' => 'surat-keluar.*', 'label' => 'Surat Keluar', 'icon' => 'M6 12 3.27 3.13A59.8 59.8 0 0 1 21.49 12 59.8 59.8 0 0 1 3.27 20.88L6 12Zm0 0h7.5'],
+    ];
+@endphp
+<body data-jenis="@yield('jenis', 'umum')" class="min-h-screen bg-paper font-sans text-ink antialiased">
 
-            <nav class="flex flex-wrap items-center gap-1.5 sm:gap-2" aria-label="Navigasi utama">
-                <a href="{{ route('dashboard') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('dashboard') ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Dashboard</a>
-                <a href="{{ route('surat-masuk.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('surat-masuk.*') ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Surat Masuk</a>
-                <a href="{{ route('surat-keluar.index') }}" class="rounded-xl px-3 py-2 text-sm font-semibold transition {{ request()->routeIs('surat-keluar.*') ? 'bg-violet-50 text-violet-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900' }}">Surat Keluar</a>
-            @auth
-                <span class="ml-1 hidden items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 sm:inline-flex">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    {{ auth()->user()->name }} <span class="text-slate-400">· {{ ucfirst(auth()->user()->role) }}</span>
+    {{-- Sidebar (desktop) --}}
+    <aside class="fixed inset-y-0 left-0 z-30 hidden w-72 flex-col bg-brand-deep text-white lg:flex">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-7 pt-8 pb-10">
+            @include('layout._logo')
+            <span>
+                <span class="block font-display text-xl font-semibold tracking-tight">SIM-Surat</span>
+                <span class="block text-[11px] font-medium tracking-wide text-white/50">Sistem Informasi Persuratan</span>
+            </span>
+        </a>
+
+        <p class="px-7 pb-3 text-[10px] font-bold tracking-[0.22em] text-white/35 uppercase">Menu</p>
+        <nav class="flex flex-col gap-1 px-4" aria-label="Navigasi utama">
+            @foreach ($menu as $item)
+                @php $aktif = request()->routeIs($item['aktif']); @endphp
+                <a href="{{ route($item['route']) }}" @if ($aktif) aria-current="page" @endif
+                   class="group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition {{ $aktif ? 'bg-white/10 text-white' : 'text-white/60 hover:bg-white/5 hover:text-white' }}">
+                    @if ($aktif)
+                        <span class="absolute top-2 bottom-2 -left-4 w-1 rounded-r-full bg-gold"></span>
+                    @endif
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $item['icon'] }}"/></svg>
+                    {{ $item['label'] }}
+                </a>
+            @endforeach
+        </nav>
+
+        @can('manage-letters')
+            <div class="mx-4 mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p class="text-xs font-semibold text-white/80">Catat surat baru</p>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                    <a href="{{ route('surat-masuk.create') }}" class="rounded-lg bg-white/10 px-2 py-2 text-center text-xs font-semibold transition hover:bg-white/20">+ Masuk</a>
+                    <a href="{{ route('surat-keluar.create') }}" class="rounded-lg bg-white/10 px-2 py-2 text-center text-xs font-semibold transition hover:bg-white/20">+ Keluar</a>
+                </div>
+            </div>
+        @endcan
+
+        @auth
+            <div class="mt-auto border-t border-white/10 p-4">
+                <div class="flex items-center gap-3 rounded-xl px-3 py-2">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold font-display text-lg font-semibold text-brand-deep">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                    <span class="min-w-0 flex-1">
+                        <span class="block truncate text-sm font-semibold">{{ auth()->user()->name }}</span>
+                        <span class="block text-xs text-white/50">{{ ucfirst(auth()->user()->role) }}</span>
+                    </span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" title="Keluar" class="rounded-lg p-2 text-white/50 transition hover:bg-white/10 hover:text-white">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"/></svg>
+                            <span class="sr-only">Keluar</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @endauth
+    </aside>
+
+    {{-- Header (mobile) --}}
+    <header class="sticky top-0 z-30 bg-brand-deep text-white lg:hidden">
+        <details class="group">
+            <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 [&::-webkit-details-marker]:hidden">
+                <span class="flex items-center gap-3">
+                    @include('layout._logo', ['kecil' => true])
+                    <span class="font-display text-lg font-semibold">SIM-Surat</span>
                 </span>
-                <form method="POST" action="{{ route('logout') }}" class="inline-flex">
-                    @csrf
-                    <button type="submit" class="rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700">Keluar</button>
-                </form>
-            @endauth
+                <span class="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold">
+                    <span class="group-open:hidden">Menu</span><span class="hidden group-open:inline">Tutup</span>
+                </span>
+            </summary>
+            <nav class="flex flex-col gap-1 border-t border-white/10 px-3 py-3" aria-label="Navigasi utama">
+                @foreach ($menu as $item)
+                    <a href="{{ route($item['route']) }}" class="rounded-lg px-3 py-2.5 text-sm font-semibold {{ request()->routeIs($item['aktif']) ? 'bg-white/10 text-white' : 'text-white/70' }}">{{ $item['label'] }}</a>
+                @endforeach
+                @auth
+                    <div class="mt-2 flex items-center justify-between border-t border-white/10 px-3 pt-3">
+                        <span class="text-xs text-white/60">{{ auth()->user()->name }} · {{ ucfirst(auth()->user()->role) }}</span>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold">Keluar</button>
+                        </form>
+                    </div>
+                @endauth
             </nav>
-        </div>
+        </details>
     </header>
 
-    <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-        @if (session('success'))
-            <div role="status" class="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm">
-                <svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.78-9.72a.75.75 0 0 0-1.06-1.06l-3.47 3.47-1.47-1.47a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4-4Z" clip-rule="evenodd"/></svg>
-                <span>{{ session('success') }}</span>
-            </div>
-        @endif
-        @yield('content')
-    </main>
+    <div class="flex min-h-screen flex-col lg:pl-72">
+        <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+            @if (session('success'))
+                <div role="status" class="mb-6 flex items-start gap-3 rounded-xl border border-emerald-800/15 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900">
+                    <svg class="mt-0.5 h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.78-9.72a.75.75 0 0 0-1.06-1.06l-3.47 3.47-1.47-1.47a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4-4Z" clip-rule="evenodd"/></svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+            @yield('content')
+        </main>
 
-    <footer class="border-t border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <p>© {{ date('Y') }} SIM-Surat</p>
-            <p>Kelola surat masuk dan surat keluar dengan lebih rapi.</p>
-        </div>
-    </footer>
+        <footer class="mx-auto w-full max-w-6xl px-4 pb-8 sm:px-6 lg:px-10">
+            <div class="flex flex-col gap-1 border-t border-line pt-5 text-xs text-ink-faint sm:flex-row sm:justify-between">
+                <p>© {{ date('Y') }} SIM-Surat</p>
+                <p>Arsip surat masuk & keluar yang tertata.</p>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
